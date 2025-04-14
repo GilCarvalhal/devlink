@@ -1,8 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import { Home } from "./pages/home";
-import { Login } from "./pages/login";
 import { Admin } from "./pages/admin";
+import { Login } from "./pages/login";
 import { Networks } from "./pages/networks";
+
+import { Private } from "./routes/Private";
 
 const router = createBrowserRouter([
   {
@@ -15,11 +18,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: (
+      <Private>
+        <Admin />
+      </Private>
+    ),
   },
   {
     path: "/admin/social",
-    element: <Networks />,
+    element: (
+      <Private>
+        <Networks />
+      </Private>
+    ),
   },
 ]);
 
