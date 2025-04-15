@@ -30,7 +30,7 @@ export function Admin() {
 
         <section className="flex my-4 gap-5">
           <div className="flex gap-2">
-            <label className="text-white font-medium mt-8 mb-2">
+            <label className="text-white font-medium mt-2 mb-2">
               Cor do link
             </label>
             <input
@@ -41,7 +41,7 @@ export function Admin() {
           </div>
 
           <div className="flex gap-2">
-            <label className="text-white font-medium mt-8 mb-2">
+            <label className="text-white font-medium mt-2 mb-2">
               Fundo do link
             </label>
             <input
