@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { FiTrash } from "react-icons/fi";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../services/firebaseConnection";
 
 export function Admin() {
   const [nameInput, setNameInput] = useState("");
@@ -9,10 +11,38 @@ export function Admin() {
   const [textColorInput, setTextColorInput] = useState("#f1f1f1");
   const [backgroundColorInput, setBackgroundColorInput] = useState("#121212");
 
+  async function handleRegister(e: FormEvent) {
+    e.preventDefault();
+
+    if (nameInput === "" || urlInput === "") {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    await addDoc(collection(db, "links"), {
+      name: nameInput,
+      url: urlInput,
+      bg: backgroundColorInput,
+      color: textColorInput,
+      created: new Date(),
+    })
+      .then(() => {
+        setNameInput("");
+        setUrlInput("");
+        console.log(`Cadastrado com sucesso!`);
+      })
+      .catch((error) => {
+        console.log(`Erro ao cadastrar no banco ${error}`);
+      });
+  }
+
   return (
     <div className="flex items-center flex-col min-h-screen pb-7 px-2">
       <Header />
-      <form action="#" className="flex flex-col mt-3 mb-3 w-full max-w-xl">
+      <form
+        onSubmit={handleRegister}
+        className="flex flex-col mt-3 mb-3 w-full max-w-xl"
+      >
         <label className="text-white font-medium mt-8 mb-2">Nome do link</label>
         <Input
           placeholder="Digite o nome do link..."
@@ -74,7 +104,7 @@ export function Admin() {
 
         <button
           type="submit"
-          className="bg-blue-600 mb-7 h-9 rounded-md text-white font-medium gap-4 flex justify-center items-center"
+          className="bg-blue-600 mb-7 h-9 rounded-md text-white font-medium gap-4 flex justify-center items-center cursor-pointer"
         >
           Cadastrar
         </button>
