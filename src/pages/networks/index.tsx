@@ -1,7 +1,7 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 
 export function Networks() {
@@ -26,6 +26,21 @@ export function Networks() {
         console.log("Erro ao salvar: " + error);
       });
   }
+
+  useEffect(() => {
+    function loadLinks() {
+      const docRef = doc(db, "social", "link");
+      getDoc(docRef).then((snapshot) => {
+        if (snapshot.data() !== undefined) {
+          setPortifolio(snapshot.data()?.portfolio);
+          setInstagram(snapshot.data()?.instagram);
+          setLinkedin(snapshot.data()?.linkedin);
+          setGithub(snapshot.data()?.github);
+        }
+      });
+    }
+    loadLinks();
+  }, []);
 
   return (
     <div className="flex items-center flex-col min-h-screen pb-7 px-2">
