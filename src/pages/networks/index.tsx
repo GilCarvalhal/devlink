@@ -5,7 +5,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 
 export function Networks() {
-  const [portfolio, setPortifolio] = useState("");
+  const [portfolio, setPortfolio] = useState("");
   const [instagram, setInstagram] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
@@ -32,7 +32,7 @@ export function Networks() {
       const docRef = doc(db, "social", "link");
       getDoc(docRef).then((snapshot) => {
         if (snapshot.data() !== undefined) {
-          setPortifolio(snapshot.data()?.portfolio);
+          setPortfolio(snapshot.data()?.portfolio);
           setInstagram(snapshot.data()?.instagram);
           setLinkedin(snapshot.data()?.linkedin);
           setGithub(snapshot.data()?.github);
@@ -52,13 +52,13 @@ export function Networks() {
 
       <form onSubmit={handleRegister} className="flex flex-col max-w-xl w-full">
         <label className="text-white font-medium mt-2 mb-2">
-          Link do Portifólio
+          Link do Portfólio
         </label>
         <Input
           type="url"
           placeholder="Digite a url do facebook..."
           value={portfolio}
-          onChange={(e) => setPortifolio(e.target.value)}
+          onChange={(e) => setPortfolio(e.target.value)}
         />
 
         <label className="text-white font-medium mt-2 mb-2">
